@@ -18,48 +18,52 @@ OBJ_FILES = $(BUILD_DIR)/main.o $(BUILD_DIR)/student.o $(BUILD_DIR)/course.o
 all: $(BUILD_DIR)/main
 
 $(BUILD_DIR)/main: $(OBJ_FILES) | $(DOCS_DIR)
-	$(CC) $(CFLAGS) $(OBJ_FILES) -o $@
+    $(CC) $(CFLAGS) $(OBJ_FILES) -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+    $(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR):
-	mkdir $(BUILD_DIR)
+    mkdir $(BUILD_DIR)
 
 $(DOC_DIR):
-	mkdir $(DOC_DIR)
+    mkdir $(DOC_DIR)
 
 $(DOCS_DIR): | $(DOC_DIR)
-	mkdir $(DOCS_DIR)
+    mkdir $(DOCS_DIR)
 
 doxyfile:
-	doxygen -g
+    doxygen -g
 
 .PHONY: docs
 docs: $(DOCS_DIR) doxyfile
-	doxygen Doxyfile
+    doxygen Doxyfile
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)
+    rm -rf $(BUILD_DIR)
 
 .PHONY: generate-doxyfile
 
 generate-doxyfile:
-	doxygen -g
+    doxygen -g
 
 # Rules for running scripts
 scripts/script1:
-	sh scripts/script1.sh
+    sh scripts/script1.sh
 
 scripts/script2:
-	sh scripts/script2.sh
+    sh scripts/script2.sh
 
 # Default target
 .DEFAULT_GOAL := all
 
 # Make docs a prerequisite of build/main
 $(BUILD_DIR)/main: docs
+
+# New doc target
+.PHONY: doc
+doc: docs
 
 # Make generate-doxyfile a separate target
 .PHONY: generate-doxyfile
