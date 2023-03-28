@@ -20,7 +20,7 @@ MAIN_OBJ = $(BUILD_DIR)/main.o
 all: $(BUILD_DIR)/main
 
 $(BUILD_DIR)/main: $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) | $(DOCS_DIR)
-    $(CC) $(CFLAGS) $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) -o $@
+	$(CC) $(CFLAGS) $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) -o $@
 
 $(MAIN_OBJ): $(SRC_DIR)/main.c | $(BUILD_DIR)
     $(CC) $(CFLAGS) -c $< -o $@
