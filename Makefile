@@ -12,48 +12,56 @@ DOCS_DIR = $(DOC_DIR)/docs
 SRC_DIR = src
 
 # Object files
-OBJ_FILES = $(BUILD_DIR)/main.o $(BUILD_DIR)/student.o $(BUILD_DIR)/course.o
+STUDENT_OBJ = $(BUILD_DIR)/student.o
+COURSE_OBJ = $(BUILD_DIR)/course.o
+MAIN_OBJ = $(BUILD_DIR)/main.o
 
 # Targets
 all: $(BUILD_DIR)/main
 
-$(BUILD_DIR)/main: $(OBJ_FILES) | $(DOCS_DIR)
-    $(CC) $(CFLAGS) $(OBJ_FILES) -o $@
+$(BUILD_DIR)/main: $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) | $(DOCS_DIR)
+    $(CC) $(CFLAGS) $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+$(MAIN_OBJ): $(SRC_DIR)/main.c | $(BUILD_DIR)
+    $(CC) $(CFLAGS) -c $< -o $@
+
+$(STUDENT_OBJ): $(SRC_DIR)/student.c | $(BUILD_DIR)
+    $(CC) $(CFLAGS) -c $< -o $@
+
+$(COURSE_OBJ): $(SRC_DIR)/course.c | $(BUILD_DIR)
     $(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR):
-    mkdir $(BUILD_DIR)
+	mkdir $(BUILD_DIR)
 
 $(DOC_DIR):
-    mkdir $(DOC_DIR)
+	mkdir $(DOC_DIR)
 
 $(DOCS_DIR): | $(DOC_DIR)
-    mkdir $(DOCS_DIR)
+	mkdir $(DOCS_DIR)
 
 doxyfile:
-    doxygen -g
+	doxygen -g
 
 .PHONY: docs
 docs: $(DOCS_DIR) doxyfile
-    doxygen Doxyfile
+	doxygen Doxyfile
 
 .PHONY: clean
 clean:
-    rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)
 
 .PHONY: generate-doxyfile
 
 generate-doxyfile:
-    doxygen -g
+	doxygen -g
 
 # Rules for running scripts
 scripts/script1:
-    sh scripts/script1.sh
+	sh scripts/script1.sh
 
 scripts/script2:
-    sh scripts/script2.sh
+	sh scripts/script2.sh
 
 # Default target
 .DEFAULT_GOAL := all
