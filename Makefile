@@ -23,13 +23,13 @@ $(BUILD_DIR)/main: $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) | $(DOCS_DIR)
 	$(CC) $(CFLAGS) $(MAIN_OBJ) $(STUDENT_OBJ) $(COURSE_OBJ) -o $@
 
 $(MAIN_OBJ): $(SRC_DIR)/main.c | $(BUILD_DIR)
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(STUDENT_OBJ): $(SRC_DIR)/student.c | $(BUILD_DIR)
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(COURSE_OBJ): $(SRC_DIR)/course.c | $(BUILD_DIR)
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
